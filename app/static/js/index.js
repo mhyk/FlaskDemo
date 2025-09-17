@@ -8,7 +8,7 @@ $(function () {
                 }
             });
             
-            $.ajax({url: url,
+            $.ajax({url: deleteUrl,
                 method: 'post',
                 data: {id:id}, 
                 success: function(result){

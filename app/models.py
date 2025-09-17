@@ -47,6 +47,29 @@ class Users(UserMixin):
             return False
 
     @classmethod
+    def update(cls, user_id, username, email, password=None):
+        try:
+            db = get_db()
+            cursor = db.cursor()
+
+            if password:
+                # Update with new password
+                password_hash = hashlib.md5(password.encode()).hexdigest()
+                sql = "UPDATE users SET username = %s, email = %s, user_password = %s WHERE id = %s"
+                cursor.execute(sql, (username, email, password_hash, user_id))
+            else:
+                # Update without changing password
+                sql = "UPDATE users SET username = %s, email = %s WHERE id = %s"
+                cursor.execute(sql, (username, email, user_id))
+
+            db.commit()
+            cursor.close()
+            return True
+        except Exception as e:
+            print(f"Error updating user: {e}")
+            return False
+
+    @classmethod
     def get_by_id(cls, user_id):
         db = get_db()
         cursor = db.cursor()

@@ -33,6 +33,30 @@ def delete():
     else:
         return jsonify(success=False,message="Failed")
 
+@user_bp.route("/user/edit", methods=["POST"])
+@login_required
+def edit():
+    try:
+        user_id = request.form.get('user_id')
+        username = request.form.get('username')
+        email = request.form.get('email')
+        password = request.form.get('password')
+
+        if not user_id or not username or not email:
+            return jsonify(success=False, message="Missing required fields")
+
+        # Update user
+        success = models.Users.update(user_id, username, email, password if password else None)
+
+        if success:
+            flash('User updated successfully!', 'success')
+            return jsonify(success=True, message="User updated successfully")
+        else:
+            return jsonify(success=False, message="Failed to update user")
+
+    except Exception as e:
+        return jsonify(success=False, message=f"Error updating user: {str(e)}")
+
 @user_bp.route('/login', methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
@@ -40,7 +64,10 @@ def login():
 
     form = LoginForm(request.form)
     if request.method == 'POST' and form.validate():
+        print(form.username.data)
+        print(form.password.data)
         user = models.Users.get_by_username(form.username.data)
+        print(user)
         if user and user.check_password(form.password.data):
             login_user(user, remember=form.remember_me.data)
             flash('Logged in successfully!', 'success')

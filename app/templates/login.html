@@ -1,70 +1,95 @@
 {% extends "layouts/master_layout.html" %}
-{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}Login - Flask Demo{% endblock %}
 
 {% block content %}
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-6">
-            <div class="card">
-                <div class="card-header">
-                    <h3 class="card-title">Login</h3>
+    <div class="d-flex justify-content-center align-items-center" style="min-height: 60vh;">
+        <div class="row w-100 justify-content-center">
+            <div class="col-md-5 col-lg-4">
+                <div class="card shadow">
+                    <div class="card-header bg-primary text-white">
+                        <div class="text-center">
+                            <h4 class="card-title mb-0">
+                                <i class="bi bi-person-circle"></i> Login
+                            </h4>
+                        </div>
+                    </div>
+                    <div class="card-body p-4">
+                        <p class="text-center text-muted mb-4">Welcome back! Please sign in to your account.</p>
+
+                        <form method="POST" novalidate>
+                            {{ form.hidden_tag() }}
+
+                            <div class="mb-3">
+                                {{ form.username.label(class="form-label") }}
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="bi bi-person"></i></span>
+                                    {{ form.username(class="form-control", placeholder="Enter your username") }}
+                                </div>
+                                {% if form.username.errors %}
+                                    <div class="text-danger mt-1">
+                                        {% for error in form.username.errors %}
+                                            <small><i class="bi bi-exclamation-circle"></i> {{ error }}</small>
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                            </div>
+
+                            <div class="mb-3">
+                                {{ form.password.label(class="form-label") }}
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="bi bi-lock"></i></span>
+                                    {{ form.password(class="form-control", placeholder="Enter your password") }}
+                                </div>
+                                {% if form.password.errors %}
+                                    <div class="text-danger mt-1">
+                                        {% for error in form.password.errors %}
+                                            <small><i class="bi bi-exclamation-circle"></i> {{ error }}</small>
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                            </div>
+
+                            <div class="mb-3">
+                                <div class="form-check">
+                                    {{ form.remember_me(class="form-check-input") }}
+                                    {{ form.remember_me.label(class="form-check-label") }}
+                                </div>
+                            </div>
+
+                            <div class="d-grid gap-2">
+                                <button type="submit" class="btn btn-primary btn-lg">
+                                    <i class="bi bi-box-arrow-in-right"></i> Sign In
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="card-footer text-center bg-light">
+                        <small class="text-muted">
+                            Test credentials: <strong>admin</strong> / <strong>admin123</strong>
+                        </small>
+                    </div>
                 </div>
-                <div class="card-body">
-                    {% with messages = get_flashed_messages(with_categories=true) %}
-                        {% if messages %}
-                            {% for category, message in messages %}
-                                <div class="alert alert-{{ 'danger' if category == 'error' else category }} alert-dismissible fade show" role="alert">
-                                    {{ message }}
-                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                                </div>
-                            {% endfor %}
-                        {% endif %}
-                    {% endwith %}
 
-                    <form method="POST">
-                        {{ form.hidden_tag() }}
-
-                        <div class="mb-3">
-                            {{ form.username.label(class="form-label") }}
-                            {{ form.username(class="form-control") }}
-                            {% if form.username.errors %}
-                                <div class="text-danger">
-                                    {% for error in form.username.errors %}
-                                        <small>{{ error }}</small>
-                                    {% endfor %}
-                                </div>
-                            {% endif %}
+                <!-- Demo Info -->
+                <div class="mt-4 text-center">
+                    <div class="card">
+                        <div class="card-body">
+                            <h6 class="card-title">
+                                <i class="bi bi-info-circle"></i> Demo Information
+                            </h6>
+                            <p class="card-text small text-muted mb-2">
+                                This is a Flask demonstration application showcasing user authentication and management.
+                            </p>
+                            <p class="card-text small">
+                                <strong>Available Users:</strong><br>
+                                • admin / admin123<br>
+                                • user1 / password
+                            </p>
                         </div>
-
-                        <div class="mb-3">
-                            {{ form.password.label(class="form-label") }}
-                            {{ form.password(class="form-control") }}
-                            {% if form.password.errors %}
-                                <div class="text-danger">
-                                    {% for error in form.password.errors %}
-                                        <small>{{ error }}</small>
-                                    {% endfor %}
-                                </div>
-                            {% endif %}
-                        </div>
-
-                        <div class="mb-3 form-check">
-                            {{ form.remember_me(class="form-check-input") }}
-                            {{ form.remember_me.label(class="form-check-label") }}
-                        </div>
-
-                        <div class="d-grid gap-2">
-                            {{ form.submit(class="btn btn-primary") }}
-                        </div>
-                    </form>
-
-                    <hr>
-                    <div class="text-center">
-                        <p>Don't have an account? <a href="{{ url_for('user.register') }}">Register here</a></p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 {% endblock %}

@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flask Demo Project - User Management System</title>
+
+    <!-- Reveal.js & Theme -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/reveal.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/theme/simple.min.css" id="theme">
+
+    <!-- Tailwind & Fonts -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <!-- Chart.js (not used now but included for consistency) -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- MathJax (optional) -->
+    <script type="text/javascript" id="MathJax-script" async
+      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+    </script>
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .reveal {
+            background-color: #F0F8FF;
+        }
+        .reveal section {
+            padding: 40px;
+            text-align: center;
+        }
+        .reveal h1 {
+            color: #003F7F;
+            font-weight: 700;
+            font-size: 3.5rem;
+        }
+        .reveal h2 {
+            color: #003F7F;
+            font-weight: 700;
+            font-size: 2.5rem;
+        }
+        .reveal h3 {
+            color: #003F7F;
+            font-weight: 700;
+            font-size: 1.75rem;
+        }
+        .reveal p, .reveal li {
+            color: #212529;
+            font-size: 1.125rem;
+            text-align: left;
+        }
+        .reveal pre {
+            background-color: #f8fafc;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            text-align: left;
+            overflow-x: auto;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .reveal code {
+            color: #003F7F;
+            font-size: 0.95rem;
+        }
+        .stat-card {
+            background-color: #fff;
+            border-left: 5px solid #007BFF;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 1.25rem;
+            margin-bottom: 1.25rem;
+            text-align: left;
+        }
+        .stat-card h3 {
+            margin-bottom: 0.5rem;
+        }
+        .highlight {
+            color: #007BFF;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <div class="reveal">
+        <div class="slides">
+
+            <!-- Title Slide -->
+            <section>
+                <h1>Flask Demo Project</h1>
+                <h2>User Management System</h2>
+                <h3>Flask 3.1.2 + PostgreSQL</h3>
+                <p style="text-align: center; margin-top: 2rem;">A comprehensive Flask web application demonstrating modern web development practices</p>
+            </section>
+
+            <!-- Project Overview -->
+            <section>
+                <h2>Project Overview</h2>
+                <section>
+                    <div class="stat-card">
+                        <h3>🎯 What is this project?</h3>
+                        <ul>
+                            <li>A <span class="highlight">Flask web application</span> demonstrating user management</li>
+                            <li>Built with <span class="highlight">Flask 3.1.2</span> and <span class="highlight">PostgreSQL</span></li>
+                            <li>Features user registration, authentication, and CRUD operations</li>
+                            <li>Blueprint-based modular architecture</li>
+                            <li>Production-ready patterns and security practices</li>
+                            <li>Bootstrap frontend with responsive design</li>
+                        </ul>
+                    </div>
+                </section>
+                <section>
+                    <div class="stat-card">
+                        <h3>🏗️ Architecture Highlights</h3>
+                        <ul>
+                            <li><span class="highlight">Application Factory Pattern</span> - Scalable app creation</li>
+                            <li><span class="highlight">Blueprint Structure</span> - Modular route organization</li>
+                            <li><span class="highlight">Database Abstraction</span> - Clean separation of concerns</li>
+                            <li><span class="highlight">Form Handling</span> - WTForms integration with CSRF protection</li>
+                            <li><span class="highlight">Session Management</span> - Flask-Login for authentication</li>
+                            <li><span class="highlight">Environment Configuration</span> - Proper secrets management</li>
+                        </ul>
+                    </div>
+                </section>
+            </section>
+
+            <!-- Technology Stack -->
+            <section>
+                <h2>Technology Stack</h2>
+                <section>
+                    <div class="stat-card">
+                        <h3>🔧 Backend Technologies</h3>
+                        <ul>
+                            <li><span class="highlight">Flask 3.1.2</span> - Modern Python web framework</li>
+                            <li><span class="highlight">PostgreSQL</span> - Robust relational database</li>
+                            <li><span class="highlight">psycopg2</span> - PostgreSQL adapter for Python</li>
+                            <li><span class="highlight">Flask-Login</span> - User session management</li>
+                            <li><span class="highlight">Flask-WTF</span> - Form handling and validation</li>
+                            <li><span class="highlight">Flask-Bootstrap</span> - UI framework integration</li>
+                        </ul>
+                    </div>
+                </section>
+                <section>
+                    <div class="stat-card">
+                        <h3>🎨 Frontend & Tools</h3>
+                        <ul>
+                            <li><span class="highlight">Bootstrap</span> - Responsive CSS framework</li>
+                            <li><span class="highlight">Jinja2</span> - Template engine with inheritance</li>
+                            <li><span class="highlight">WTForms</span> - Form generation and validation</li>
+                            <li><span class="highlight">Pipenv</span> - Dependency management</li>
+                            <li><span class="highlight">Python 3.10</span> - Modern Python runtime</li>
+                            <li><span class="highlight">Git</span> - Version control</li>
+                        </ul>
+                    </div>
+                </section>
+            </section>
+
+            <!-- Project Structure -->
+            <section>
+                <h2>Project Structure & Architecture</h2>
+                <section>
+                    <h3>Directory Layout</h3>
+                    <pre><code class="language-bash">
+FlaskDemo/
+├── app/                    # Main application package
+│   ├── __init__.py        # Application factory
+│   ├── database.py        # Database connection management
+│   ├── models.py          # Database models (M in MVC)
+│   ├── user/              # User blueprint
+│   │   ├── __init__.py    # Blueprint registration
+│   │   ├── controller.py  # Route handlers (C in MVC)
+│   │   └── forms.py       # WTForms definitions
+│   ├── student/           # Student module (placeholder)
+│   ├── templates/         # Jinja2 templates (V in MVC)
+│   └── static/            # CSS, JS, images
+├── postgresql_schema.sql  # Database schema
+├── run.py                 # Application entry point
+├── .flaskenv             # Flask environment variables
+├── .env_sample           # Environment template
+└── Pipfile               # Dependencies
+                    </code></pre>
+                </section>
+
+                <section>
+                    <div class="stat-card">
+                        <h3>🏗️ MVC Architecture Pattern</h3>
+                        <ul>
+                            <li><span class="highlight">Model (M)</span> - <code>app/models.py</code> - Data layer and business logic</li>
+                            <li><span class="highlight">View (V)</span> - <code>app/templates/</code> - Presentation layer (HTML templates)</li>
+                            <li><span class="highlight">Controller (C)</span> - <code>app/user/controller.py</code> - Request handling and routing</li>
+                            <li><span class="highlight">Separation of Concerns</span> - Each layer has distinct responsibilities</li>
+                            <li><span class="highlight">Maintainability</span> - Changes in one layer don't affect others</li>
+                            <li><span class="highlight">Testability</span> - Each component can be tested independently</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <section>
+                    <h3>📋 Model Layer - Data Management</h3>
+                    <pre><code class="language-python">
+# app/models.py - The "M" in MVC
+class Users(UserMixin):
+    def __init__(self, id=None, username=None, password=None, email=None):
+        self.id = id
+        self.username = username
+        self.password = password
+        self.email = email
+
+    def add(self):
+        # Database insertion logic
+        db = get_db()
+        cursor = db.cursor()
+        # ... SQL operations
+
+    @classmethod
+    def get_by_username(cls, username):
+        # Data retrieval logic
+        # Returns User object or None
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>🎮 Controller Layer - Request Handling</h3>
+                    <pre><code class="language-python">
+# app/user/controller.py - The "C" in MVC
+@user_bp.route('/login', methods=['GET', 'POST'])
+def login():
+    form = LoginForm(request.form)
+    if request.method == 'POST' and form.validate():
+        # Get data from Model
+        user = models.Users.get_by_username(form.username.data)
+        if user and user.check_password(form.password.data):
+            login_user(user)
+            # Redirect to View
+            return redirect(url_for('user.index'))
+    # Render View with data
+    return render_template('login.html', form=form)
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>👁️ View Layer - Presentation</h3>
+                    <pre><code class="language-html">
+<!-- app/templates/login.html - The "V" in MVC -->
+{% extends "layouts/master_layout.html" %}
+
+{% block content %}
+    <form method="POST">
+        {{ form.hidden_tag() }}
+
+        <div class="mb-3">
+            {{ form.username.label(class="form-label") }}
+            {{ form.username(class="form-control") }}
+        </div>
+
+        <button type="submit" class="btn btn-primary">
+            Sign In
+        </button>
+    </form>
+{% endblock %}
+                    </code></pre>
+                </section>
+            </section>
+
+            <!-- Blueprint Architecture -->
+            <section>
+                <h2>Blueprint Architecture</h2>
+                <section>
+                    <div class="stat-card">
+                        <h3>🧩 What are Blueprints?</h3>
+                        <ul>
+                            <li><span class="highlight">Modular Organization</span> - Group related functionality together</li>
+                            <li><span class="highlight">Scalability</span> - Add new features without modifying core app</li>
+                            <li><span class="highlight">Team Development</span> - Different developers can work on different blueprints</li>
+                            <li><span class="highlight">Reusability</span> - Blueprints can be shared across projects</li>
+                            <li><span class="highlight">URL Prefixes</span> - Organize routes with prefixes like <code>/user/</code></li>
+                            <li><span class="highlight">Template Folders</span> - Each blueprint can have its own templates</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <section>
+                    <h3>📁 Blueprint Structure</h3>
+                    <pre><code class="language-bash">
+app/user/                   # User blueprint directory
+├── __init__.py            # Blueprint creation and registration
+├── controller.py          # Route handlers (views)
+└── forms.py              # WTForms for this blueprint
+
+# Each blueprint is self-contained:
+# - Routes for specific functionality
+# - Forms related to that feature
+# - Can have its own templates
+# - Can have its own static files
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>🔧 Blueprint Creation</h3>
+                    <pre><code class="language-python">
+# app/user/__init__.py
+from flask import Blueprint
+
+# Create blueprint with name and optional URL prefix
+user_bp = Blueprint('user', __name__, url_prefix='')
+
+# Import routes after blueprint creation
+from . import controller
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>📝 Blueprint Registration</h3>
+                    <pre><code class="language-python">
+# app/__init__.py - Application Factory
+def create_app():
+    app = Flask(__name__)
+
+    # Register blueprints with the app
+    from .user import user_bp as user_blueprint
+    app.register_blueprint(user_blueprint)
+
+    # Can register multiple blueprints
+    # from .admin import admin_bp
+    # app.register_blueprint(admin_bp, url_prefix='/admin')
+
+    return app
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>🛣️ Blueprint Routes</h3>
+                    <pre><code class="language-python">
+# app/user/controller.py
+from . import user_bp  # Import the blueprint
+
+@user_bp.route('/')           # Maps to /
+@user_bp.route('/user')       # Maps to /user
+def index():
+    return render_template('index.html')
+
+@user_bp.route('/user/register')  # Maps to /user/register
+def register():
+    return render_template('signup.html')
+
+# URL generation: url_for('user.index')
+# Blueprint name + function name
+                    </code></pre>
+                </section>
+
+                <section>
+                    <div class="stat-card">
+                        <h3>💡 Blueprint Benefits in Our Project</h3>
+                        <ul>
+                            <li><span class="highlight">User Management</span> - All user-related routes in one blueprint</li>
+                            <li><span class="highlight">Future Growth</span> - Easy to add student, admin, or API blueprints</li>
+                            <li><span class="highlight">Clean URLs</span> - Organized route structure</li>
+                            <li><span class="highlight">Maintainability</span> - Related code stays together</li>
+                            <li><span class="highlight">Testing</span> - Can test blueprints independently</li>
+                            <li><span class="highlight">Deployment</span> - Can enable/disable features by blueprint</li>
+                        </ul>
+                    </div>
+                </section>
+            </section>
+
+            <!-- Architecture Benefits -->
+            <section>
+                <h2>Architecture Benefits</h2>
+                <section>
+                    <div class="stat-card">
+                        <h3>🎯 MVC + Blueprint Advantages</h3>
+                        <ul>
+                            <li><span class="highlight">Separation of Concerns</span> - Each layer has clear responsibilities</li>
+                            <li><span class="highlight">Modularity</span> - Features organized in blueprints</li>
+                            <li><span class="highlight">Scalability</span> - Easy to add new features and functionality</li>
+                            <li><span class="highlight">Maintainability</span> - Code is organized and easy to find</li>
+                            <li><span class="highlight">Team Collaboration</span> - Multiple developers can work simultaneously</li>
+                            <li><span class="highlight">Code Reusability</span> - Components can be reused across projects</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <section>
+                    <div class="stat-card">
+                        <h3>🔄 Request Flow in Our Architecture</h3>
+                        <ol style="text-align: left;">
+                            <li><span class="highlight">1. Request</span> - User accesses <code>/user/register</code></li>
+                            <li><span class="highlight">2. Blueprint Routing</span> - Flask finds <code>user_bp.route('/user/register')</code></li>
+                            <li><span class="highlight">3. Controller</span> - <code>register()</code> function handles the request</li>
+                            <li><span class="highlight">4. Model</span> - Controller calls <code>Users.add()</code> if needed</li>
+                            <li><span class="highlight">5. View</span> - Controller renders <code>signup.html</code> template</li>
+                            <li><span class="highlight">6. Response</span> - HTML sent back to user's browser</li>
+                        </ol>
+                    </div>
+                </section>
+            </section>
+
+            <!-- Database Design -->
+            <section>
+                <h2>Database Design</h2>
+                <section>
+                    <h3>Database Schema</h3>
+                    <pre><code class="language-sql">
+-- Users table for authentication
+CREATE TABLE users (
+    id SERIAL PRIMARY KEY,
+    username VARCHAR(50) UNIQUE NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL,
+    user_password VARCHAR(32) NOT NULL  -- MD5 hash
+);
+
+-- User information table
+CREATE TABLE user_info (
+    id SERIAL PRIMARY KEY,
+    fullname VARCHAR(100),
+    address TEXT,
+    birthday DATE,
+    user_id INTEGER REFERENCES users(id) ON DELETE CASCADE
+);
+                    </code></pre>
+                </section>
+                <section>
+                    <div class="stat-card">
+                        <h3>🗄️ Database Features</h3>
+                        <ul>
+                            <li><span class="highlight">PostgreSQL SERIAL</span> - Auto-incrementing primary keys</li>
+                            <li><span class="highlight">Foreign Key Constraints</span> - Referential integrity</li>
+                            <li><span class="highlight">CASCADE DELETE</span> - Automatic cleanup</li>
+                            <li><span class="highlight">Unique Constraints</span> - Username and email uniqueness</li>
+                            <li><span class="highlight">Parameterized Queries</span> - SQL injection prevention</li>
+                            <li><span class="highlight">Connection Pooling</span> - Efficient resource management</li>
+                        </ul>
+                    </div>
+                </section>
+            </section>
+
+            <!-- Application Factory Pattern -->
+            <section>
+                <h2>Application Factory Pattern</h2>
+                <section>
+                    <h3>The create_app() Function</h3>
+                    <pre><code class="language-python">
+def create_app():
+    app = Flask(__name__)
+
+    # Configuration
+    app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', 'dev')
+
+    # Database setup
+    init_db_pool()
+
+    # Initialize extensions
+    Bootstrap(app)
+    csrf.init_app(app)
+    login_manager.init_app(app)
+
+    # Register blueprints
+    from app.user import bp as user_bp
+    app.register_blueprint(user_bp)
+
+    return app
+                    </code></pre>
+                </section>
+                <section>
+                    <div class="stat-card">
+                        <h3>🏭 Factory Benefits</h3>
+                        <ul>
+                            <li><span class="highlight">Testing</span> - Easy to create test instances</li>
+                            <li><span class="highlight">Configuration</span> - Different configs for dev/prod</li>
+                            <li><span class="highlight">Modularity</span> - Clean separation of setup logic</li>
+                            <li><span class="highlight">Blueprints</span> - Organized registration</li>
+                            <li><span class="highlight">Extensions</span> - Centralized initialization</li>
+                            <li><span class="highlight">Scalability</span> - Easy to extend and modify</li>
+                        </ul>
+                    </div>
+                </section>
+            </section>
+
+            <!-- Database Layer -->
+            <section>
+                <h2>Database Layer</h2>
+                <section>
+                    <h3>Connection Management</h3>
+                    <pre><code class="language-python">
+# database.py - Connection management
+def get_db_connection():
+    if not hasattr(g, 'db_conn'):
+        g.db_conn = psycopg2.connect(
+            host=os.getenv('DB_HOST', 'localhost'),
+            port=os.getenv('DB_PORT', '5432'),
+            database=os.getenv('DB_NAME'),
+            user=os.getenv('DB_USERNAME'),
+            password=os.getenv('DB_PASSWORD')
+        )
+    return g.db_conn
+
+@app.teardown_appcontext
+def close_db_connection(error):
+    db = g.pop('db_conn', None)
+    if db is not None:
+        db.close()
+                    </code></pre>
+                </section>
+                <section>
+                    <h3>Model Implementation</h3>
+                    <pre><code class="language-python">
+# models.py - Users class
+class Users:
+    def add(self, username, email, password):
+        conn = get_db_connection()
+        cursor = conn.cursor()
+
+        # Hash password (MD5 for demo)
+        hashed_password = hashlib.md5(password.encode()).hexdigest()
+
+        cursor.execute("""
+            INSERT INTO users (username, email, user_password)
+            VALUES (%s, %s, %s)
+        """, (username, email, hashed_password))
+
+        conn.commit()
+        cursor.close()
+                    </code></pre>
+                </section>
+                <section>
+                    <div class="stat-card">
+                        <h3>🔒 Security Features</h3>
+                        <ul>
+                            <li><span class="highlight">Parameterized Queries</span> - Prevents SQL injection</li>
+                            <li><span class="highlight">Connection Management</span> - Proper resource cleanup</li>
+                            <li><span class="highlight">Password Hashing</span> - MD5 (demo) or bcrypt (production)</li>
+                            <li><span class="highlight">Environment Variables</span> - Secure credential storage</li>
+                            <li><span class="highlight">CSRF Protection</span> - Form security</li>
+                            <li><span class="highlight">Session Security</span> - Flask-Login integration</li>
+                        </ul>
+                    </div>
+                </section>
+            </section>
+
+            <!-- Blueprint Architecture -->
+            <section>
+                <h2>Blueprint Architecture</h2>
+                <section>
+                    <h3>User Blueprint Structure</h3>
+                    <pre><code class="language-python">
+# user/__init__.py - Blueprint creation
+from flask import Blueprint
+
+bp = Blueprint('user', __name__, url_prefix='/user')
+
+from app.user import controller
+
+# user/controller.py - Route handlers
+@bp.route('/')
+@login_required
+def index():
+    users = Users()
+    all_users = users.all()
+    return render_template('user/index.html', users=all_users)
+
+@bp.route('/register', methods=['GET', 'POST'])
+@login_required
+def register():
+    form = UserForm()
+    if form.validate_on_submit():
+        # Process form data
+        pass
+    return render_template('user/register.html', form=form)
+                    </code></pre>
+                </section>
+                <section>
+                    <div class="stat-card">
+                        <h3>📋 Available Routes</h3>
+                        <ul>
+                            <li><span class="highlight">GET /</span> - Homepage with login form</li>
+                            <li><span class="highlight">POST /login</span> - User authentication</li>
+                            <li><span class="highlight">GET /logout</span> - User logout</li>
+                            <li><span class="highlight">GET /user</span> - User management dashboard</li>
+                            <li><span class="highlight">GET/POST /user/register</span> - User registration</li>
+                            <li><span class="highlight">POST /user/delete</span> - User deletion</li>
+                        </ul>
+                    </div>
+                </section>
+            </section>
+
+            <!-- Authentication System -->
+            <section>
+                <h2>Authentication System</h2>
+                <section>
+                    <h3>Flask-Login Integration</h3>
+                    <pre><code class="language-python">
+# User loader callback
+@login_manager.user_loader
+def load_user(user_id):
+    return Users.get_by_id(user_id)
+
+# Login route
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    form = LoginForm()
+    if form.validate_on_submit():
+        user = Users.authenticate(
+            form.username.data,
+            form.password.data
+        )
+        if user:
+            login_user(user, remember=form.remember_me.data)
+            return redirect(url_for('user.index'))
+        flash('Invalid credentials')
+    return render_template('login.html', form=form)
+                    </code></pre>
+                </section>
+                <section>
+                    <div class="stat-card">
+                        <h3>🔐 Authentication Features</h3>
+                        <ul>
+                            <li><span class="highlight">Session Management</span> - Secure user sessions</li>
+                            <li><span class="highlight">Remember Me</span> - Persistent login option</li>
+                            <li><span class="highlight">Route Protection</span> - @login_required decorator</li>
+                            <li><span class="highlight">User Loader</span> - Automatic user object creation</li>
+                            <li><span class="highlight">Logout Handling</span> - Clean session termination</li>
+                            <li><span class="highlight">Redirect Safety</span> - Prevents open redirects</li>
+                        </ul>
+                    </div>
+                </section>
+            </section>
+
+            <!-- Form Handling -->
+            <section>
+                <h2>Form Handling</h2>
+                <section>
+                    <h3>WTForms Implementation</h3>
+                    <pre><code class="language-python">
+# user/forms.py
+from flask_wtf import FlaskForm
+from wtforms import StringField, PasswordField, BooleanField
+from wtforms.validators import DataRequired, Email
+
+class UserForm(FlaskForm):
+    username = StringField('Username', validators=[DataRequired()])
+    email = StringField('Email', validators=[DataRequired(), Email()])
+    password = PasswordField('Password', validators=[DataRequired()])
+
+class LoginForm(FlaskForm):
+    username = StringField('Username', validators=[DataRequired()])
+    password = PasswordField('Password', validators=[DataRequired()])
+    remember_me = BooleanField('Remember Me')
+                    </code></pre>
+                </section>
+                <section>
+                    <div class="stat-card">
+                        <h3>📝 Form Features</h3>
+                        <ul>
+                            <li><span class="highlight">CSRF Protection</span> - Built-in security tokens</li>
+                            <li><span class="highlight">Validation</span> - Server-side form validation</li>
+                            <li><span class="highlight">Error Handling</span> - User-friendly error messages</li>
+                            <li><span class="highlight">Bootstrap Integration</span> - Styled form rendering</li>
+                            <li><span class="highlight">Field Types</span> - String, Password, Boolean fields</li>
+                            <li><span class="highlight">Custom Validators</span> - Email format validation</li>
+                        </ul>
+                    </div>
+                </section>
+            </section>
+
+            <!-- Development Setup -->
+            <section>
+                <h2>Development Setup</h2>
+                <section>
+                    <h3>Environment Configuration</h3>
+                    <pre><code class="language-bash">
+# .flaskenv (version controlled)
+FLASK_APP=app
+FLASK_DEBUG=true
+FLASK_RUN_PORT=5000
+
+# .env (local/sensitive - not version controlled)
+DB_HOST=localhost
+DB_PORT=5432
+DB_NAME=ccc151_cs
+DB_USERNAME=your_username
+DB_PASSWORD=your_password
+SECRET_KEY=your-secret-key-here
+BOOTSTRAP_SERVE_LOCAL=True
+                    </code></pre>
+                </section>
+                <section>
+                    <h3>Getting Started</h3>
+                    <pre><code class="language-bash">
+# Install dependencies
+pipenv install
+pipenv shell
+
+# Setup database
+createdb ccc151_cs
+psql -d ccc151_cs -f postgresql_schema.sql
+
+# Configure environment
+cp .env_sample .env
+# Edit .env with your database credentials
+
+# Run the application
+flask run
+                    </code></pre>
+                </section>
+            </section>
+
+            <!-- Security Considerations -->
+            <section>
+                <h2>Security Considerations</h2>
+                <section>
+                    <div class="stat-card">
+                        <h3>🛡️ Implemented Security</h3>
+                        <ul>
+                            <li><span class="highlight">CSRF Protection</span> - Global form protection enabled</li>
+                            <li><span class="highlight">SQL Injection Prevention</span> - Parameterized queries</li>
+                            <li><span class="highlight">Session Security</span> - Flask-Login secure sessions</li>
+                            <li><span class="highlight">Environment Variables</span> - Externalized secrets</li>
+                            <li><span class="highlight">Route Protection</span> - Authentication decorators</li>
+                            <li><span class="highlight">Connection Management</span> - Proper resource cleanup</li>
+                        </ul>
+                    </div>
+                </section>
+            </section>
+
+            <!-- Project Highlights -->
+            <section>
+                <h2>Project Highlights</h2>
+                <section>
+                    <div class="stat-card">
+                        <h3>✨ Best Practices Demonstrated</h3>
+                        <ul>
+                            <li><span class="highlight">Application Factory</span> - Scalable app initialization</li>
+                            <li><span class="highlight">Blueprint Organization</span> - Modular code structure</li>
+                            <li><span class="highlight">Separation of Concerns</span> - Models, views, controllers</li>
+                            <li><span class="highlight">Template Inheritance</span> - DRY frontend development</li>
+                            <li><span class="highlight">Environment Management</span> - Dev/prod configuration</li>
+                            <li><span class="highlight">Database Abstraction</span> - Clean data layer</li>
+                        </ul>
+                    </div>
+                </section>
+                <section>
+                    <div class="stat-card">
+                        <h3>🎯 Learning Outcomes</h3>
+                        <ul>
+                            <li>Understanding Flask application structure and patterns</li>
+                            <li>Database integration with PostgreSQL</li>
+                            <li>User authentication and session management</li>
+                            <li>Form handling and validation techniques</li>
+                            <li>Security best practices in web development</li>
+                            <li>Modern Python web development workflow</li>
+                        </ul>
+                    </div>
+                </section>
+            </section>
+
+
+            <!-- Thank You -->
+            <section>
+                <h1>Thank You!</h1>
+                <h3>Questions & Discussion</h3>
+                <div class="stat-card" style="margin-top: 2rem;">
+                    <h3>📚 Resources</h3>
+                    <ul>
+                        <li>Flask Documentation: <span class="highlight">flask.palletsprojects.com</span></li>
+                        <li>PostgreSQL Docs: <span class="highlight">postgresql.org/docs</span></li>
+                        <li>Flask Extensions: <span class="highlight">flask.palletsprojects.com/extensions</span></li>
+                        <li>Project Repository: <span class="highlight">Explore the code structure</span></li>
+                    </ul>
+                </div>
+            </section>
+
+        </div>
+    </div>
+
+    <!-- Reveal.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/reveal.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/plugin/notes/notes.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/plugin/math/math.min.js"></script>
+
+    <script>
+        Reveal.initialize({
+            controls: true,
+            progress: true,
+            history: true,
+            center: true,
+            transition: 'slide',
+            plugins: [ RevealNotes, RevealMath.MathJax3 ]
+        });
+    </script>
+</body>
+</html>
