@@ -6,6 +6,22 @@
 {% import "bootstrap/utils.html" as utils %}
 {% block content %}
     <div class="container">
+        <div class="row mb-3">
+            <div class="col">
+                <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                    <div class="container-fluid">
+                        <span class="navbar-brand">Flask Demo</span>
+                        <div class="navbar-nav ms-auto">
+                            {% if current_user.is_authenticated %}
+                                <span class="navbar-text me-3">Welcome, {{ current_user.username }}!</span>
+                                <a class="nav-link" href="{{ url_for('user.logout') }}">Logout</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </nav>
+            </div>
+        </div>
+
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item active" aria-current="page">Users</li>
